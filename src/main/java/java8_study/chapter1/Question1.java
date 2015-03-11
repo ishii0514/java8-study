@@ -7,6 +7,9 @@ import java.util.Random;
  * Hello world!
  *
  */
+
+//http://closedunbounded.hatenablog.com/entry/2015/01/10/153146
+
 public class Question1 
 {
     public static void main( String[] args )
