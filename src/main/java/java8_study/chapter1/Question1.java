@@ -10,7 +10,7 @@ import java.util.Random;
 
 //http://closedunbounded.hatenablog.com/entry/2015/01/10/153146
 
-public class Question1 
+public class Question1
 {
     public static void main( String[] args )
     {
