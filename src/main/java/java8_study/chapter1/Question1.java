@@ -29,4 +29,6 @@ public class Question1
     	});
     	//System.out.println(Arrays.toString(array));
     }
+    
+    
 }
