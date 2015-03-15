@@ -10,7 +10,7 @@ public interface RunnableEx {
 			try {
 				runner.run();
 			} catch(Exception e){
-				throw new RuntimeException();
+				throw new RuntimeException(e);
 			}
 		};
 	}
