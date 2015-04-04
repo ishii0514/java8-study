@@ -21,15 +21,22 @@ public class Question1 {
     	String contents = new String(Files.readAllBytes(Paths.get(alice)), StandardCharsets.UTF_8);
     	List<String> words = Arrays.asList(contents.split("[//P{L}]+"));
     	
-    	
-    	int count = 0;
+    	noThreadCounter(words);
+    	threadCounter(words);
+
+    }
+	
+	@SuppressWarnings("unused")
+	private static void noThreadCounter(List<String> words ){
+		int count = 0;
     	for (String w:words){
     		if (w.length() > 12) count++;
     	}
     	System.out.println("no thread count=" + Integer.toString(count));
-    	
-    	
-    	int threadCount = 100;
+	}
+	
+	private static void threadCounter(List<String> words ) throws InterruptedException, ExecutionException{
+		int threadCount = 100;
     	int wordCount = words.size();
     	Object[] futures = new Object[wordCount];
     	ExecutorService exec = Executors.newFixedThreadPool(threadCount);
@@ -40,7 +47,7 @@ public class Question1 {
     			return 0;
     		});
     	}
-    	
+  
     	AtomicInteger atmicCount = new AtomicInteger();
     	for (int i=0;i < wordCount;i++){
     		@SuppressWarnings("unchecked")
@@ -48,8 +55,7 @@ public class Question1 {
     		atmicCount.addAndGet(future.get());
     	}
     	System.out.println("thread count=" + atmicCount.toString());
-
-    }
+	}
 	
 	
 }
