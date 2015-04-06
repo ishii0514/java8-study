@@ -19,8 +19,8 @@ public class Question1 {
     }
 
 	public static class LoggerEx{
-		private final Logger logger;
-		protected LoggerEx(String name) {
+		private Logger logger;
+		private LoggerEx(String name) {
 			//ハンドルを切り替えないと、
 			//setLevelでALLにしても、INFO以上(INFO,WARNING,SEVERE)しか標準エラー出力に出力されない。
 			//setLevelでWARNINGにすると、INFOは出力されなくなる。
