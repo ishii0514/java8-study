@@ -12,7 +12,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
+//参考にするサイト
 //http://closedunbounded.hatenablog.com/entry/2015/01/19/132455
+//https://github.com/namihiran/java8
+
 public class Question1 {
 	public static void main( String[] args ) throws IOException, InterruptedException, ExecutionException
     {
