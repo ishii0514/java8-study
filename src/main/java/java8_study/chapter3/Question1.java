@@ -1,5 +1,6 @@
 package java8_study.chapter3;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +27,8 @@ public class Question1 {
 			return  new LoggerEx(name);
 		}
 
-		public void logif(Level level, Supplier<Boolean> condition, Supplier<String> msgSupplier){
-			if (logger.isLoggable(level) && condition.get()){
+		public void logif(Level level, BooleanSupplier condition, Supplier<String> msgSupplier){
+			if (logger.isLoggable(level) && condition.getAsBoolean()){
 				logger.log(level,msgSupplier.get());
 			}
 
