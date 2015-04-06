@@ -17,15 +17,15 @@ public class Question1 {
 	public static void main( String[] args ) throws IOException, InterruptedException, ExecutionException
     {
     	String alice = Question1.class.getClassLoader().getResource("./alice.txt").getFile();
-    	//alice = alice.substring(1);
+    	alice = alice.substring(1);
     	String contents = new String(Files.readAllBytes(Paths.get(alice)), StandardCharsets.UTF_8);
     	List<String> words = Arrays.asList(contents.split("[//P{L}]+"));
-    	
+
     	noThreadCounter(words);
     	threadCounter(words);
 
     }
-	
+
 	@SuppressWarnings("unused")
 	private static void noThreadCounter(List<String> words ){
 		int count = 0;
@@ -34,7 +34,7 @@ public class Question1 {
     	}
     	System.out.println("no thread count=" + Integer.toString(count));
 	}
-	
+
 	private static void threadCounter(List<String> words ) throws InterruptedException, ExecutionException{
 		int threadCount = 100;
     	int wordCount = words.size();
@@ -47,7 +47,7 @@ public class Question1 {
     			return 0;
     		});
     	}
-  
+
     	AtomicInteger atmicCount = new AtomicInteger();
     	for (int i=0;i < wordCount;i++){
     		@SuppressWarnings("unchecked")
@@ -56,7 +56,7 @@ public class Question1 {
     	}
     	System.out.println("thread count=" + atmicCount.toString());
 	}
-	
-	
+
+
 }
 
