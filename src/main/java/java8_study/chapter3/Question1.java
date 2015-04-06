@@ -27,8 +27,8 @@ public class Question1 {
 		}
 
 		public void logif(Level level, Supplier<Boolean> condition, Supplier<String> msgSupplier){
-			if (this.logger.isLoggable(level) && condition.get()){
-				this.logger.log(level,msgSupplier.get());
+			if (logger.isLoggable(level) && condition.get()){
+				logger.log(level,msgSupplier.get());
 			}
 
 		}
