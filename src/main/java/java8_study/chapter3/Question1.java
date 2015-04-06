@@ -2,6 +2,7 @@ package java8_study.chapter3;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,7 +10,7 @@ import java.util.logging.Logger;
 public class Question1 {
 	public static void main( String[] args )
     {
-		int i = 3;
+		int i = 10;
 		String[] a = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l"};
 
 		LoggerEx logger = LoggerEx.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -18,9 +19,18 @@ public class Question1 {
     }
 
 	public static class LoggerEx{
-		private Logger logger;
+		private final Logger logger;
 		protected LoggerEx(String name) {
+			//ハンドルを切り替えないと、
+			//setLevelでALLにしても、INFO以上(INFO,WARNING,SEVERE)しか標準エラー出力に出力されない。
+			//setLevelでWARNINGにすると、INFOは出力されなくなる。
+			Level newLevel = Level.ALL;
 			logger = Logger.getLogger(name);
+			logger.setLevel(newLevel);
+			ConsoleHandler handler = new ConsoleHandler();
+			handler.setLevel(newLevel);
+			logger.addHandler(handler);
+			logger.setUseParentHandlers(false);
 		}
 
 		public static LoggerEx getLogger(String name){
