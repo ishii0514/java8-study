@@ -6,7 +6,9 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+//参考にするサイト
+//http://closedunbounded.hatenablog.com/entry/2015/02/27/190524
+//https://github.com/namihiran/java8
 public class Question1 {
 	public static void main( String[] args )
     {
