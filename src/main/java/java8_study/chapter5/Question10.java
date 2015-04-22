@@ -1,5 +1,6 @@
 package java8_study.chapter5;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -14,22 +15,19 @@ public class Question10 {
 		//};
 		String dptZoneId = "America/Los_Angeles";
 		String arvZoneId = "CET";
-		String dptTime = "03:05";
-		String time = "10:50";
-
-		LocalTime arrivedTime = getArrivedTime(dptZoneId,arvZoneId,dptTime,time);
+		LocalTime  dptTime = LocalTime.parse("03:05");
+		Duration duration = Duration.parse("PT10H50M");
+		
+		LocalTime arrivedTime = getArrivedTime(dptZoneId,arvZoneId,dptTime,duration);
 		System.out.println(arrivedTime);
 
     }
 
-	private static LocalTime getArrivedTime(String dptZoneId, String arvZoneId, String dptTime, String time){
+	private static LocalTime getArrivedTime(String dptZoneId, String arvZoneId, LocalTime dptTime, Duration duration){
 
-		LocalTime  dptLocalTime = LocalTime.parse(dptTime);
-		LocalTime duration = LocalTime.parse(time);
-
-		ZonedDateTime depZonedTime = ZonedDateTime.of(LocalDate.now(),dptLocalTime,ZoneId.of(dptZoneId));
-		ZonedDateTime arvZonedTime = depZonedTime.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
-		ZonedDateTime arvTime = arvZonedTime.withZoneSameInstant(ZoneId.of(arvZoneId));
+		ZonedDateTime depZonedTime = ZonedDateTime.of(LocalDate.now(),dptTime,ZoneId.of(dptZoneId));
+		ZonedDateTime arvZonedTimeAtdep = depZonedTime.plus(duration);
+		ZonedDateTime arvTime = arvZonedTimeAtdep.withZoneSameInstant(ZoneId.of(arvZoneId));
 
 		//System.out.println(depZonedTime);
 		//System.out.println(arvZonedTime);
