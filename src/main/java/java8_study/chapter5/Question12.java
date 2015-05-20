@@ -15,14 +15,14 @@ public class Question12 {
 		todo.add(new Task(LocalDateTime.parse("2015-04-22T10:10:10"),"Asia/Tokyo","meting1"));
 		todo.add(new Task(LocalDateTime.parse("2015-04-23T02:10:10"),"Asia/Tokyo","meting2"));
 		todo.add(new Task(LocalDateTime.parse("2015-04-23T03:10:10"),"Asia/Tokyo","meting3"));
-		
-		
+
+
 		List<Task> alerts = todo.getAlerts();
 		for(Task task:alerts){
 			System.out.println(task.getTimeStr() + " "+ task.getTask());
 		}
     }
-	
+
 	public static class Todo{
 		private List<Task> tasks;
 		public Todo(){
@@ -36,7 +36,7 @@ public class Question12 {
 			return tasks.stream().filter( t -> t.isTime(now)).collect(Collectors.toList());
 		}
 	}
-	
+
 	public static class Task{
 		private ZonedDateTime time;
 		private String task;
@@ -54,7 +54,7 @@ public class Question12 {
 			ZoneId zoneid = now.getZone();
 			ZonedDateTime tasktime = this.time.withZoneSameLocal(zoneid);
 			Duration d = Duration.between(now,tasktime);
-			return d.getSeconds() >= 0 && d.getSeconds() < 3600; 
+			return d.getSeconds() >= 0 && d.getSeconds() < 3600;
 		}
 	}
 }
