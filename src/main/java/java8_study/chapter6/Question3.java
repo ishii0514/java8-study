@@ -54,6 +54,7 @@ public class Question3 {
 
 		Instant start2 = Instant.now();
 
+
 		for (Future<Long> future : futures) {
 			try {
 				future.get();
@@ -74,6 +75,45 @@ public class Question3 {
 
 		System.out.println("result:" + Long.toString(result));
 		System.out.println("submit:" + Long.toString(sumbitTime.toMillis()));
+		System.out.println("execute:" + Long.toString(executeTime.toMillis()));
+		System.out.println("sum:" + Long.toString(sumTime.toMillis()));
+		System.out.println("total:" + Long.toString(totalTime.toMillis()));
+
+		pool.shutdown();
+	}
+
+	public static void getPerf2(Callable<Long> callable,Supplier<Long> supplier){
+		ExecutorService pool = Executors.newFixedThreadPool(THREAD_NUMBER);
+		List<Future<Long>> futures = new ArrayList<>();
+
+		List<Callable<Long>> tasks = new ArrayList<>();
+
+
+		Instant start1 = Instant.now();
+		for (int i = 0; i < THREAD_NUMBER; i++) {
+			tasks.add(callable);
+		}
+
+		Instant start2 = Instant.now();
+
+		try {
+			pool.invokeAll(tasks);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		Instant start3 = Instant.now();
+		long result = supplier.get();
+		Instant end = Instant.now();
+
+
+		Duration sumbitTime = Duration.between(start1, start2);
+		Duration executeTime = Duration.between(start2, start3);
+		Duration sumTime = Duration.between(start3, end);
+		Duration totalTime = Duration.between(start1, end);
+
+		System.out.println("result:" + Long.toString(result));
+		System.out.println("settasks:" + Long.toString(sumbitTime.toMillis()));
 		System.out.println("execute:" + Long.toString(executeTime.toMillis()));
 		System.out.println("sum:" + Long.toString(sumTime.toMillis()));
 		System.out.println("total:" + Long.toString(totalTime.toMillis()));
