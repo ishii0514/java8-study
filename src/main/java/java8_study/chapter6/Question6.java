@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -20,35 +19,37 @@ import java.util.concurrent.Future;
 
 public class Question6 {
 	public static void main( String[] args )
-    {	
+    {
 		String targetDir = Question6.class.getClassLoader().getResource("./").getFile();
 		targetDir = targetDir.substring(1);
 		File dir = new File(targetDir);
 	    File[] files = dir.listFiles();
-		
+
 		ConcurrentHashMap<String, Set<File>> map = getWords(files);
-		
-		
- 
+
+
+
     }
 	public static ConcurrentHashMap<String, Set<File>> getWords(File[] targetFiles)
 	{
 		ConcurrentHashMap<String, Set<File>> map = new ConcurrentHashMap<String, Set<File>>();
-		
-		
+
+
 		int thread_number = targetFiles.length;
-		ExecutorService pool = Executors.newFixedThreadPool(thread_number);		
+		ExecutorService pool = Executors.newFixedThreadPool(thread_number);
 		List<Future<Integer>> futures = new ArrayList<>();
-		
-		
+
+
 		for(int i=0;i<targetFiles.length;i++){
 			File targetFile = targetFiles[i];
 			Future<Integer> future = pool.submit(()
 					->{  try {
 							String contents = new String(Files.readAllBytes(Paths.get(targetFile.getAbsolutePath())), StandardCharsets.UTF_8);
-							List<String> words = Arrays.asList(contents.split("[//P{L}]+"));			
+							List<String> words = Arrays.asList(contents.split("[//P{L}]+"));
 							for(String word:words){
-								map.computeIfAbsent(word, k ->  new HashSet<File>()).add(targetFile);	
+
+								//TODO:セットに入れるところがスレッドセーフじゃないので書き直す必要あり
+								map.computeIfAbsent(word, k ->  new HashSet<File>()).add(targetFile);
 							}
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -56,7 +57,7 @@ public class Question6 {
 						return 0;
 					}
 						);
-			
+
 			futures.add(future);
 		}
 		for (Future<Integer> future : futures) {
@@ -66,7 +67,7 @@ public class Question6 {
 				e.printStackTrace();
 			}
 		}
-		pool.shutdown();	
+		pool.shutdown();
 		return map;
 	}
 }
