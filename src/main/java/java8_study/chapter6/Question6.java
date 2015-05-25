@@ -7,10 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,9 +47,7 @@ public class Question6 {
 							String contents = new String(Files.readAllBytes(Paths.get(targetFile.getAbsolutePath())), StandardCharsets.UTF_8);
 							List<String> words = Arrays.asList(contents.split("[//P{L}]+"));
 							for(String word:words){
-
-								//TODO:セットに入れるところがスレッドセーフじゃないので書き直す必要あり
-								map.computeIfAbsent(word, k ->  new HashSet<File>()).add(targetFile);
+								map.computeIfAbsent(word, k ->  new ConcurrentSkipListSet<File>()).add(targetFile);
 							}
 						} catch (IOException e) {
 							e.printStackTrace();
